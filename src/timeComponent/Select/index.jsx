@@ -1,8 +1,10 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./style.css";
 import { DropdownArrowIcon } from "../ArrowIcon";
 
 const Select = ({ hourData, minuteData }) => {
+  const hourRef = useRef();
+  const minuteRef = useRef();
   const [hourState, setHourState] = useState({
     isOpen: false,
     hourTitle: "Hour",
@@ -10,6 +12,7 @@ const Select = ({ hourData, minuteData }) => {
   const [minuteState, setMinuteState] = useState({
     isOpen: false,
     canOpen: false,
+    hasOpened: false,
     minuteTitle: "Minute",
     minuteDataset: [],
   });
@@ -17,11 +20,8 @@ const Select = ({ hourData, minuteData }) => {
   const [selectedMinute, setSelectedMinute] = useState(null);
 
   const className = `time-slot ${
-    selectedHour && selectedMinute ? " completed" : ""
+    selectedHour && minuteState.hasOpened ? " completed" : ""
   }`;
-
-  const hourRef = createRef();
-  const minuteRef = createRef();
 
   const handleClick = (e) => {
     if (
@@ -42,11 +42,14 @@ const Select = ({ hourData, minuteData }) => {
       ...minuteState,
       canOpen: true,
       minuteDataset: filteredMinuteData,
+      hasOpened: false,
     });
+    // set to null or to 1st minute value as ff: filteredMinuteData.MinuteTime
+    setSelectedMinute(null);
   };
 
   const onMinuteChange = (item) => {
-    setMinuteState({ ...minuteState, isOpen: false });
+    setMinuteState({ ...minuteState, isOpen: false, hasOpened: true });
     setSelectedMinute(item.MinuteTime);
   };
   const onHourOpen = () => {
