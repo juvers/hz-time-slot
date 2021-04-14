@@ -44,8 +44,14 @@ const Select = ({ hourData, minuteData }) => {
       minuteDataset: filteredMinuteData,
       hasOpened: false,
     });
-    // set to null or to 1st minute value as ff: filteredMinuteData.MinuteTime
+    // N.B. set to null or to 1st minute value as ff: filteredMinuteData.MinuteTime
     setSelectedMinute(null);
+
+    // TODO: use this data to gray out and unallow click on hour
+    console.log(
+      "Inside hour data: ",
+      minuteData[`${item}`][0].AvailableCapacity
+    );
   };
 
   const onMinuteChange = (item) => {
