@@ -41,7 +41,7 @@
 
 .select .wrapper .title.up {
     font-size: 14px;
-    /* to show or hid title pushed up like material */
+    /* to show or hide title pushed up like material-ui style */
     /* display: none; */
 }
 
@@ -93,7 +93,29 @@
 }
 
 .time-slot.completed {
-    background-color: #f00;
+    background: rgba(255, 166, 0);
+}
+
+
+/* to prevent click and give a light gray color */
+
+.unallow {
+    color: rgba(0, 0, 0, 0.5);
+    cursor: not-allowed !important;
+}
+
+.button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* sample sunset gradient  */
+
+.sunset {
+    background: rgb(36, 6, 0);
+    background: linear-gradient( 0deg, rgba(36, 6, 0, 1) 0%, rgba(211, 103, 26, 1) 2%, rgba(255, 166, 0, 0.7512289325842697) 100%);
+    border: 1px solid #eee;
 }
 
 @media (min-width: 1280px) {

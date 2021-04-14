@@ -15,18 +15,27 @@ const Select = ({ hourData, minuteData }) => {
     hasOpened: false,
     minuteTitle: "Minute",
     minuteDataset: [],
+    minuteObject: {},
   });
   const [selectedHour, setSelectedHour] = useState(null);
   const [selectedMinute, setSelectedMinute] = useState(null);
 
-  const className = `time-slot ${
+  const classNameTimeSelected = `time-slot ${
     selectedHour && minuteState.hasOpened ? " completed" : ""
   }`;
 
-  const handleClick = (e) => {
+  const classNameAllowOrUnallow = (item) =>
+    !minuteData[`${item}`][minuteData[`${item}`].length - 1].AvailableCapacity
+      ? "item unallow"
+      : "item";
+
+  const classNameSunsetOrNotsunset = (item) =>
+    item.IsSunsetTimeslot ? "item sunset" : "item";
+
+  const handleClick = ({ target }) => {
     if (
-      hourRef.current.contains(e.target) ||
-      minuteRef.current.contains(e.target)
+      hourRef.current.contains(target) ||
+      minuteRef.current.contains(target)
     ) {
       return;
     }
@@ -35,6 +44,11 @@ const Select = ({ hourData, minuteData }) => {
   };
 
   const onHourChange = (item) => {
+    // Thinking Process: This prevents click if availability of last element on array is zero, viz available capacity = 0
+    if (
+      !minuteData[`${item}`][minuteData[`${item}`].length - 1].AvailableCapacity
+    )
+      return;
     setHourState({ ...hourState, isOpen: false });
     setSelectedHour(item);
     const filteredMinuteData = minuteData[`${item}`];
@@ -45,17 +59,17 @@ const Select = ({ hourData, minuteData }) => {
       hasOpened: false,
     });
     // N.B. set to null or to 1st minute value as ff: filteredMinuteData.MinuteTime
+    // Thinking Process: This returns the minute title to the display
     setSelectedMinute(null);
-
-    // TODO: use this data to gray out and unallow click on hour
-    console.log(
-      "Inside hour data: ",
-      minuteData[`${item}`][0].AvailableCapacity
-    );
   };
 
   const onMinuteChange = (item) => {
-    setMinuteState({ ...minuteState, isOpen: false, hasOpened: true });
+    setMinuteState({
+      ...minuteState,
+      isOpen: false,
+      hasOpened: true,
+      minuteObject: item,
+    });
     setSelectedMinute(item.MinuteTime);
   };
   const onHourOpen = () => {
@@ -68,7 +82,11 @@ const Select = ({ hourData, minuteData }) => {
   };
 
   const hourList = hourData.map((item) => (
-    <li key={item} className="item" onClick={() => onHourChange(item)}>
+    <li
+      key={item}
+      className={`${classNameAllowOrUnallow(item)}`}
+      onClick={() => onHourChange(item)}
+    >
       {item}
     </li>
   ));
@@ -76,9 +94,8 @@ const Select = ({ hourData, minuteData }) => {
   const minuteList = minuteState.minuteDataset?.map((item) => (
     <li
       key={item?.StartDateTime}
-      className="item"
+      className={`${classNameSunsetOrNotsunset(item)}`}
       onClick={() => onMinuteChange(item)}
-      style={item.IsSunsetTimeslot ? { color: "red" } : { color: "blue" }}
     >
       {item.FullTime}
     </li>
@@ -90,7 +107,7 @@ const Select = ({ hourData, minuteData }) => {
   });
 
   return (
-    <div className={className}>
+    <div className={classNameTimeSelected}>
       <div className="select" ref={hourRef}>
         <div className="content" onClick={onHourOpen}>
           <div className="wrapper">
@@ -118,6 +135,18 @@ const Select = ({ hourData, minuteData }) => {
         </div>
         {minuteState.isOpen ? <ul className="options">{minuteList}</ul> : null}
       </div>
+      <button
+        className={"button"}
+        onClick={() =>
+          console.log(
+            "Logging object with all values: ",
+            minuteState.minuteObject
+          )
+        }
+        disabled={!minuteState.hasOpened}
+      >
+        Continue
+      </button>
     </div>
   );
 };

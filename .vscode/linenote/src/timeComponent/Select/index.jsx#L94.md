@@ -1,0 +1,1 @@
+How does theme ui handle classes object generally?
