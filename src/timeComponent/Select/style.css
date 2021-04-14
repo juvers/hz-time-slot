@@ -1,0 +1,125 @@
+.select {
+    display: flex;
+    position: relative;
+    height: 100px;
+    background-color: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 30px;
+    padding-top: 20px;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    margin: 0 10px 0 10px;
+}
+
+.select .content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid #c2c3c9;
+    padding-bottom: 3px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.select .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.select .wrapper .name {
+    font-size: 26px;
+    color: #000000;
+}
+
+.select .wrapper .title {
+    font-size: 26px;
+    color: #858893;
+}
+
+.select .wrapper .title.up {
+    font-size: 14px;
+    /* to show or hid title pushed up like material */
+    /* display: none; */
+}
+
+.select .dropdown-arrow {
+    margin-bottom: 7px;
+}
+
+.select .options {
+    width: 100%;
+    max-height: 275px;
+    overflow-y: auto;
+    width: inherit;
+    position: absolute;
+    background-color: #fff;
+    list-style: none;
+    margin: 60px -30px 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 2;
+    box-shadow: 0px 20px 30px 7px rgba(0, 0, 0, 0.05);
+}
+
+.select .options .item {
+    line-height: 55px;
+    text-align: left;
+    padding-left: 47px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.select .options .item:hover {
+    background-color: #f3f3f5;
+    cursor: pointer;
+}
+
+.select .options .item .flag {
+    width: 16px;
+    height: 12px;
+    margin-right: 12px;
+}
+
+.time-slot {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 30px 50px;
+    box-sizing: border-box;
+    background-color: #ebecef;
+}
+
+.time-slot.completed {
+    background-color: #f00;
+}
+
+@media (min-width: 1280px) {
+    .time-slot .arrow {
+        margin: 0 85px 0 80px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .time-slot .arrow {
+        margin: 0 65px 0 60px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .time-slot {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .time-slot>div {
+        margin: 10px;
+    }
+    .time-slot>div:last-child {
+        margin-top: 20px;
+    }
+    .time-slot .arrow {
+        display: none;
+    }
+}
