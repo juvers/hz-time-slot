@@ -41,7 +41,7 @@ const recreateData = (arr) => {
     }, {});
 };
 
-// TODO: Fetch data to get updated data
+// TODO: Fetch updated data based on date selected from date picker
 function App() {
   return (
     <div className="App">
